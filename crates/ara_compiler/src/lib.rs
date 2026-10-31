@@ -846,6 +846,40 @@ impl Parse for ComponentMacroInput {
     }
 }
 
+fn resolve_component_asset(manifest_dir: &str, rel_path: &str) -> PathBuf {
+    let clean = rel_path.trim().trim_start_matches("./");
+    let direct = PathBuf::from(manifest_dir).join(clean);
+    if direct.exists() {
+        return direct;
+    }
+
+    // Search relative to subdirectories under `src/` so neighbor files like
+    // `"counter.component.html"` resolve directly next to `mod.rs`
+    fn find_in_dir(dir: &std::path::Path, target_rel: &str) -> Option<PathBuf> {
+        let candidate = dir.join(target_rel);
+        if candidate.exists() {
+            return Some(candidate);
+        }
+        let entries = fs::read_dir(dir).ok()?;
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir()
+                && let Some(found) = find_in_dir(&path, target_rel)
+            {
+                return Some(found);
+            }
+        }
+        None
+    }
+
+    let src_dir = PathBuf::from(manifest_dir).join("src");
+    if let Some(found) = find_in_dir(&src_dir, clean) {
+        return found;
+    }
+
+    direct
+}
+
 fn compile_component_impl(
     comp_ident: &Ident,
     fields: &[(Ident, Type)],
@@ -853,8 +887,8 @@ fn compile_component_impl(
     style_rel_path: &str,
 ) -> TokenStream2 {
     let manifest_dir = env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR not set");
-    let html_full_path = PathBuf::from(&manifest_dir).join(template_rel_path);
-    let scss_full_path = PathBuf::from(&manifest_dir).join(style_rel_path);
+    let html_full_path = resolve_component_asset(&manifest_dir, template_rel_path);
+    let scss_full_path = resolve_component_asset(&manifest_dir, style_rel_path);
 
     let html_src = fs::read_to_string(&html_full_path).unwrap_or_else(|e| {
         panic!(

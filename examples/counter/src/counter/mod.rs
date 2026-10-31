@@ -24,8 +24,8 @@ ara::component! {
     component: CounterComponent {
         srv: Inject<CounterService>,
     },
-    template: "src/counter/counter.component.html",
-    style: "src/counter/counter.component.scss",
+    template: "counter.component.html",
+    style: "counter.component.scss",
 }
 
 #[cfg(test)]
