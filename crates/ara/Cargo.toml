@@ -1,0 +1,9 @@
+[package]
+name = "ara"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+ara_core = { path = "../ara_core" }
+ara_render = { path = "../ara_render" }
+ara_compiler = { path = "../ara_compiler" }

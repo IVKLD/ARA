@@ -9,3 +9,4 @@ any_spawner.workspace = true
 futures.workspace = true
 slotmap.workspace = true
 parking_lot.workspace = true
+taffy.workspace = true

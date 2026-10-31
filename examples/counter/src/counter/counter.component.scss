@@ -1,0 +1,62 @@
+$card-bg: #242936;
+$display-bg: #12151c;
+$text-main: #66eba6;
+$btn-dec: #bf3847;
+$btn-reset: #424a5e;
+$btn-inc: #337ae0;
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 480px;
+    height: 360px;
+    padding: 32px;
+    gap: 28px;
+    background-color: $card-bg;
+}
+
+.display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 120px;
+    background-color: $display-bg;
+    color: $text-main;
+    font-size: 30px;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    height: 80px;
+    gap: 20px;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 80px;
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.dec {
+    background-color: $btn-dec;
+}
+
+.reset {
+    background-color: $btn-reset;
+    font-size: 18px;
+}
+
+.inc {
+    background-color: $btn-inc;
+}

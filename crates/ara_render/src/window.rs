@@ -1,5 +1,8 @@
 use std::sync::Arc;
-use ara_core::{SceneGraph, flush_effects};
+use ara_core::{
+    DefineComponent, Injector, SceneGraph, flush_effects,
+    parking_lot::RwLock,
+};
 use winit::{
     application::ApplicationHandler,
     dpi::LogicalSize,
@@ -21,13 +24,16 @@ impl ApplicationHandler for App {
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {
         if self.window.is_none() {
             let attrs = Window::default_attributes()
-                .with_title("ARA Retained UI (Wayland + Vulkan)")
+                .with_title("ARA v22 Retained UI (Pure Wayland + Vulkan)")
                 .with_inner_size(LogicalSize::new(800.0, 600.0));
             let window = Arc::new(
                 event_loop
                     .create_window(attrs)
                     .expect("Failed to create Wayland window"),
             );
+            let size = window.inner_size();
+            self.scene
+                .set_viewport_size(size.width.max(1) as f32, size.height.max(1) as f32);
             let renderer = pollster::block_on(Renderer::new(window.clone()));
             window.request_redraw();
             self.window = Some(window);
@@ -46,6 +52,10 @@ impl ApplicationHandler for App {
                 event_loop.exit();
             }
             WindowEvent::Resized(physical_size) => {
+                self.scene.set_viewport_size(
+                    physical_size.width.max(1) as f32,
+                    physical_size.height.max(1) as f32,
+                );
                 if let Some(renderer) = &mut self.renderer {
                     renderer.resize(physical_size);
                 }
@@ -107,4 +117,13 @@ pub fn run(scene: SceneGraph) {
         cursor_pos: (0.0, 0.0),
     };
     event_loop.run_app(&mut app).expect("EventLoop error");
+}
+
+pub fn bootstrap<C: DefineComponent + 'static>() {
+    let injector = Injector::new();
+    let scene_graph = SceneGraph::new();
+    let shared_scene: Arc<RwLock<SceneGraph>> = scene_graph.clone().into_shared();
+    let comp = C::construct(&injector);
+    comp.mount(&shared_scene, None);
+    run(scene_graph);
 }

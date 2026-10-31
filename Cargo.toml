@@ -1,6 +1,13 @@
 [workspace]
 resolver = "2"
-members = ["crates/ara_core", "crates/ara_render", "examples/retained_button", "examples/counter"]
+members = [
+    "crates/ara_core",
+    "crates/ara_render",
+    "crates/ara_compiler",
+    "crates/ara",
+    "examples/retained_button",
+    "examples/counter",
+]
 
 [workspace.package]
 edition = "2024"
@@ -16,3 +23,8 @@ slotmap = "1.1"
 parking_lot = "0.13"
 bytemuck = { version = "1.22", features = ["derive"] }
 pollster = "0.4"
+taffy = "0.7"
+grass = { version = "0.13", default-features = false }
+syn = { version = "2.0", features = ["full"] }
+quote = "1.0"
+proc-macro2 = "1.0"

@@ -3,7 +3,13 @@ name = "counter"
 edition.workspace = true
 version.workspace = true
 
+[lib]
+name = "counter"
+path = "src/counter/mod.rs"
+
+[[bin]]
+name = "counter"
+path = "src/main.rs"
+
 [dependencies]
-ara_core = { path = "../../crates/ara_core" }
-ara_render = { path = "../../crates/ara_render" }
-reactive_graph.workspace = true
+ara = { path = "../../crates/ara" }

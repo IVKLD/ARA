@@ -1,0 +1,8 @@
+<div class="card">
+    <div class="display">CLICKS: {{ srv.clicks() }}</div>
+    <div class="actions">
+        <button class="btn dec" (click)="srv.dec()">-1</button>
+        <button class="btn reset" (click)="srv.reset()">RESET</button>
+        <button class="btn inc" (click)="srv.inc()">+1</button>
+    </div>
+</div>
