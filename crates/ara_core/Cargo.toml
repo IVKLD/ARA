@@ -1,0 +1,11 @@
+[package]
+name = "ara_core"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+reactive_graph.workspace = true
+any_spawner.workspace = true
+futures.workspace = true
+slotmap.workspace = true
+parking_lot.workspace = true

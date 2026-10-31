@@ -1,0 +1,18 @@
+[workspace]
+resolver = "2"
+members = ["crates/ara_core", "crates/ara_render", "examples/retained_button", "examples/counter"]
+
+[workspace.package]
+edition = "2024"
+version = "0.1.0"
+
+[workspace.dependencies]
+winit = { version = "0.30", default-features = false, features = ["wayland", "rwh_06"] }
+wgpu = "24"
+reactive_graph = { version = "0.1", default-features = false, features = ["effects"] }
+any_spawner = { version = "0.2", default-features = false, features = ["futures-executor"] }
+futures = { version = "0.3", default-features = false, features = ["executor"] }
+slotmap = "1.1"
+parking_lot = "0.13"
+bytemuck = { version = "1.22", features = ["derive"] }
+pollster = "0.4"

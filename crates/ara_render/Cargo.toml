@@ -1,0 +1,11 @@
+[package]
+name = "ara_render"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+ara_core = { path = "../ara_core" }
+winit.workspace = true
+wgpu.workspace = true
+bytemuck.workspace = true
+pollster.workspace = true

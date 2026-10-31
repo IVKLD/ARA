@@ -1,0 +1,9 @@
+[package]
+name = "counter"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+ara_core = { path = "../../crates/ara_core" }
+ara_render = { path = "../../crates/ara_render" }
+reactive_graph.workspace = true

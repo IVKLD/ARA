@@ -1,0 +1,17 @@
+# Rust / Cargo
+/target/
+**/*.rs.bk
+*.pdb
+
+# Nix / direnv
+.direnv/
+result
+result-*
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
